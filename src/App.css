@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+
+#root {
+  font-family: 'Roboto', sans-serif;
+}
+
+html {
+  font-size: 62.5%; /* Ré-équilibrage du `rem` face au `px` pour des calculs simples */
+}
+/* Exemple d'application */
+p {
+  font-size: 12px; /* Pour les navigateurs qui ne supportent pas le rem */
+  font-size: 1.2rem; /* Pour les navigateurs « Responsive » */
+}
+
+h1 {
+  font-size: 1.8rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+h3 {
+  font-size: 1.3rem;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
