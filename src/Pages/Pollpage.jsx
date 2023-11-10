@@ -14,8 +14,9 @@ library.add(faCirclePlus); // Ajoutez d'autres icônes si nécessaire
 const Pollpage = () => {
 	const [listOfTitles, setListOfTitles] = useState();
 	const [isLoading, setIsLoading] = useState(true);
-	const [isNewCount, setIsNewCount] = useState(false);
-	// Prévoir fonction pour définir quelle semaine nous sommes
+	const [isVotePossible, setIsVotePossible] = useState(true);
+
+	// Prévoir fonction pour définir quelle semaine nous sommes 🟠
 	let chosenWeek = 43;
 	// Récupération des données de la BDD des compétiteurs de la semaine
 	const fetchData = async () => {
@@ -35,12 +36,16 @@ const Pollpage = () => {
 		fetchData();
 	}, []);
 
+	// J'ajoute un point au titre
 	const handleClickPlusPoint = (id, points) => {
-		let newPoint = points + 1;
-		setIsNewCount(true);
-		return newPoint;
-	  };
-	  
+		const updatedTitles = listOfTitles.map((title) =>
+			title._id === id ? { ...title, Points: points + 1 } : title
+		);
+		setListOfTitles(updatedTitles);
+		setIsVotePossible(false);
+
+
+	};
 
 	return (
 		<>
@@ -53,7 +58,6 @@ const Pollpage = () => {
 					<h1> Les titres de la semaine {chosenWeek}</h1>
 					<div>
 						{listOfTitles.map((title) => {
-							console.log("map", title);
 							return (
 								<div key={title._id} className="tuile-title-bloc">
 									<div>
@@ -62,18 +66,18 @@ const Pollpage = () => {
 										<p>{title.Artist}</p>
 									</div>
 									<div>
-										<FontAwesomeIcon
-											icon={faCirclePlus}
-											className="icon-plus"
-											onClick={() =>
-												handleClickPlusPoint(title._id, title.Points)
-											}
-										/>
-										{isNewCount ? (
-											<p>{newPoint}</p>
+										{isVotePossible ? (
+											<FontAwesomeIcon
+												icon={faCirclePlus}
+												className="icon-plus"
+												onClick={() =>
+													handleClickPlusPoint(title._id, title.Points)
+												}
+											/>
 										) : (
-											<p>{title.Points} points</p>
+											<p>déjà voté</p> // A faire : revoir le message 🟠
 										)}
+										<p>{title.Points} points</p>
 									</div>
 								</div>
 							);
